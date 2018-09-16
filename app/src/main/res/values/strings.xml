@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">VolumeSwitchWidget</string>
+    <string name="sound_muted">Medien Sound AUS</string>
+    <string name="sound_value">Medien Sound %1d</string>
 </resources>
