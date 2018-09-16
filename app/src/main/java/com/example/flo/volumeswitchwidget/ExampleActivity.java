@@ -68,7 +68,7 @@ public class ExampleActivity extends AppCompatActivity {
                 doFinish();
                 finish();
             }
-        }, 2000);
+        }, 1500);
     }
 
     private void doFinish() {
