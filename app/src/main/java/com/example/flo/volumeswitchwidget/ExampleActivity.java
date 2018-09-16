@@ -39,6 +39,7 @@ public class ExampleActivity extends AppCompatActivity {
         setContentView(R.layout.activity_status);
         ButterKnife.bind(this);
         setTitle("");
+        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
     }
 
     @Override
@@ -64,9 +65,15 @@ public class ExampleActivity extends AppCompatActivity {
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             public void run() {
+                doFinish();
                 finish();
             }
         }, 2000);
+    }
+
+    private void doFinish() {
+        finish();
+        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
     }
 
     private void muteSound(AudioManager audioManager, SharedPreferences prefs) {
@@ -89,7 +96,7 @@ public class ExampleActivity extends AppCompatActivity {
 
     @OnClick(R.id.button)
     public void onClickButton(View v) {
-        finish();
+        doFinish();
     }
 
 
