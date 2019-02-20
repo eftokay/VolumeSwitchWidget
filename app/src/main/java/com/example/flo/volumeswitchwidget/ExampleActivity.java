@@ -14,6 +14,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.flo.volumeswitchwidget.util.VolumeSwitchWidgetPreferences;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -28,8 +30,6 @@ import static com.example.flo.volumeswitchwidget.util.VolumeSwitchWidgetPreferen
  */
 public class ExampleActivity extends AppCompatActivity {
 
-
-
     @BindView(R.id.button)
     ImageView imageView;
 
@@ -39,49 +39,49 @@ public class ExampleActivity extends AppCompatActivity {
         setContentView(R.layout.activity_status);
         ButterKnife.bind(this);
         setTitle("");
-        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+//        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
 
-        AudioManager audioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
-
-        SharedPreferences prefs = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
-        if (prefs.contains(SHARED_PREF_LAST_VOLUME)) {
-            restoreLastVolume(audioManager, prefs);
-        } else {
-            muteSound(audioManager, prefs);
-        }
-
-        Intent intent = new Intent(this, ExampleAppWidgetProvider.class);
-        intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-        int[] ids = AppWidgetManager.getInstance(getApplication()).getAppWidgetIds(new ComponentName(getApplication(), ExampleAppWidgetProvider.class));
-        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
-        sendBroadcast(intent);
-
-        // close activity after x second
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            public void run() {
-                doFinish();
-                finish();
-            }
-        }, 1500);
+//        AudioManager audioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
+//
+//        SharedPreferences prefs = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
+//        if (prefs.contains(SHARED_PREF_LAST_VOLUME)) {
+//            restoreLastVolume(audioManager, prefs);
+//        } else {
+//            muteSound(audioManager, prefs);
+//        }
+//
+//        Intent intent = new Intent(this, ExampleAppWidgetProvider.class);
+//        intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+//        int[] ids = AppWidgetManager.getInstance(getApplication()).getAppWidgetIds(new ComponentName(getApplication(), ExampleAppWidgetProvider.class));
+//        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
+//        sendBroadcast(intent);
+//
+//        // close activity after x second
+//        Handler handler = new Handler();
+//        handler.postDelayed(new Runnable() {
+//            public void run() {
+//                doFinish();
+//                finish();
+//            }
+//        }, 50);
     }
 
     private void doFinish() {
         finish();
-        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+//        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
     }
 
     private void muteSound(AudioManager audioManager, SharedPreferences prefs) {
         int currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
         prefs.edit().putInt(SHARED_PREF_LAST_VOLUME, currentVolume).commit();
         audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 0, 0);
-        imageView.setBackgroundResource(R.drawable.volume_off);
-        Toast.makeText(this, R.string.sound_muted, Toast.LENGTH_LONG).show();
+//        imageView.setBackgroundResource(R.drawable.volume_off);
+//        Toast.makeText(this, R.string.sound_muted, Toast.LENGTH_LONG).show();
     }
 
     private void restoreLastVolume(AudioManager audioManager, SharedPreferences prefs) {
@@ -89,14 +89,34 @@ public class ExampleActivity extends AppCompatActivity {
         prefs.edit().remove(SHARED_PREF_LAST_VOLUME).commit();
         audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, volume, 0);
         // remove saved value to mute sound the next time the user clicks
-        imageView.setBackgroundResource(R.drawable.volume);
+//        imageView.setBackgroundResource(R.drawable.volume);
         String text = getString(R.string.sound_value, volume);
-        Toast.makeText(this, text, Toast.LENGTH_LONG).show();
+//        Toast.makeText(this, text, Toast.LENGTH_LONG).show();
+    }
+
+    private void updateButton() {
+        if (VolumeSwitchWidgetPreferences.isMuted(this)){
+            imageView.setImageResource(R.drawable.volume_off);
+        } else {
+            imageView.setImageResource(R.drawable.volume);
+        }
     }
 
     @OnClick(R.id.button)
     public void onClickButton(View v) {
-        doFinish();
+        AudioManager audioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
+
+        if (VolumeSwitchWidgetPreferences.isMuted(this)){
+//            audioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_UNMUTE, AudioManager.FLAG_SHOW_UI);
+            audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 10, AudioManager.FLAG_SHOW_UI);
+        } else {
+//            audioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_MUTE, AudioManager.FLAG_SHOW_UI);
+            audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 0, AudioManager.FLAG_SHOW_UI);
+
+        }
+
+        updateButton();
+//        doFinish();
     }
 
 
