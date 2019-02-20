@@ -56,9 +56,9 @@ public class MusicVolumeWidgetProvider extends AppWidgetProvider {
 
     private void setImageResource(Context context, RemoteViews views) {
         if (VolumeSwitchWidgetPreferences.isMuted(context)) {
-            views.setImageViewResource(R.id.button, R.drawable.volume_off);
+            views.setImageViewResource(R.id.button, R.drawable.baseline_music_off_white_48dp);
         } else {
-            views.setImageViewResource(R.id.button, R.drawable.volume);
+            views.setImageViewResource(R.id.button, R.drawable.baseline_music_note_white_48dp);
         }
     }
 
