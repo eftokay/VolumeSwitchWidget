@@ -1,4 +1,4 @@
-package com.example.flo.volumeswitchwidget;
+package de.fklappan.app.volumeswitchwidget;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

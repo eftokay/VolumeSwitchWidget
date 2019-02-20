@@ -1,4 +1,4 @@
-package com.example.flo.volumeswitchwidget;
+package de.fklappan.app.volumeswitchwidget;
 
 import org.junit.Test;
 

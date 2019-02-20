@@ -1,9 +1,8 @@
-package com.example.flo.volumeswitchwidget.util;
+package de.fklappan.app.volumeswitchwidget.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.media.AudioManager;
-import android.util.Log;
 
 import static android.content.Context.MODE_PRIVATE;
 

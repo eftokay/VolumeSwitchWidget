@@ -3,6 +3,6 @@
     android:minHeight="40dp"
     android:updatePeriodMillis="86400000"
 
-    android:initialLayout="@layout/example_appwidget"
+    android:initialLayout="@layout/music_volume_toggle_widget"
     android:widgetCategory="home_screen">
 </appwidget-provider>

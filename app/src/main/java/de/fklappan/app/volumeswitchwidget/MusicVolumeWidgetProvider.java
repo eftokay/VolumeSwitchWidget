@@ -1,4 +1,4 @@
-package com.example.flo.volumeswitchwidget;
+package de.fklappan.app.volumeswitchwidget;
 
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
@@ -10,11 +10,13 @@ import android.os.Handler;
 import android.util.Log;
 import android.widget.RemoteViews;
 
-import com.example.flo.volumeswitchwidget.util.VolumeSwitchWidgetPreferences;
+import com.example.flo.volumeswitchwidget.R;
 
-public class ExampleAppWidgetProvider extends AppWidgetProvider {
+import de.fklappan.app.volumeswitchwidget.util.VolumeSwitchWidgetPreferences;
 
-    private static final String LOG_TAG = ExampleAppWidgetProvider.class.getSimpleName();
+public class MusicVolumeWidgetProvider extends AppWidgetProvider {
+
+    private static final String LOG_TAG = MusicVolumeWidgetProvider.class.getSimpleName();
     private static final String TOUCH_ACTION = "com.example.flo.volumeswitchwidget.TOUCH_ACTION";
 
     private static boolean initObserver = true;
@@ -30,13 +32,13 @@ public class ExampleAppWidgetProvider extends AppWidgetProvider {
     }
 
     private void updateWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId) {
-        Intent touchIntent = new Intent(context, ExampleAppWidgetProvider.class);
+        Intent touchIntent = new Intent(context, MusicVolumeWidgetProvider.class);
         touchIntent.setAction(TOUCH_ACTION);
         // provide widget id to perform an update on that widget after touch
         touchIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, touchIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.example_appwidget);
+        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.music_volume_toggle_widget);
         setImageResource(context, views);
         views.setOnClickPendingIntent(R.id.button, pendingIntent);
         appWidgetManager.updateAppWidget(appWidgetId, views);

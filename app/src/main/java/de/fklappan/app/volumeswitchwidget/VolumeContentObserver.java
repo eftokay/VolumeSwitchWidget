@@ -1,4 +1,4 @@
-package com.example.flo.volumeswitchwidget;
+package de.fklappan.app.volumeswitchwidget;
 
 import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
@@ -28,9 +28,9 @@ public class VolumeContentObserver extends ContentObserver {
 
         // check if the audio volume changed - other changed system settings wont affect us
         if (soundVolumeChanged()) {
-            Intent intent = new Intent(context, ExampleAppWidgetProvider.class);
+            Intent intent = new Intent(context, MusicVolumeWidgetProvider.class);
             intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-            int[] ids = AppWidgetManager.getInstance(context).getAppWidgetIds(new ComponentName(context.getApplicationContext(), ExampleAppWidgetProvider.class));
+            int[] ids = AppWidgetManager.getInstance(context).getAppWidgetIds(new ComponentName(context.getApplicationContext(), MusicVolumeWidgetProvider.class));
             intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
             context.sendBroadcast(intent);
         }
