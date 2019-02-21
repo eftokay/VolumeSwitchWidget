@@ -9,8 +9,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.example.flo.volumeswitchwidget.R;
-
 import de.fklappan.app.volumeswitchwidget.util.VolumeSwitchWidgetPreferences;
 
 import butterknife.BindView;

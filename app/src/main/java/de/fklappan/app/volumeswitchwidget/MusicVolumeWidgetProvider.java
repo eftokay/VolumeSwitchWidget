@@ -10,14 +10,12 @@ import android.os.Handler;
 import android.util.Log;
 import android.widget.RemoteViews;
 
-import com.example.flo.volumeswitchwidget.R;
-
 import de.fklappan.app.volumeswitchwidget.util.VolumeSwitchWidgetPreferences;
 
 public class MusicVolumeWidgetProvider extends AppWidgetProvider {
 
     private static final String LOG_TAG = MusicVolumeWidgetProvider.class.getSimpleName();
-    private static final String TOUCH_ACTION = "com.example.flo.volumeswitchwidget.TOUCH_ACTION";
+    private static final String TOUCH_ACTION = "de.fklappan.app.volumeswitchwidget.TOUCH_ACTION";
 
     private static boolean initObserver = true;
 
