@@ -6,6 +6,8 @@ Date: 2019-02-21
 
 Accepted
 
+Amended by [3. Configuration activity](0003-configuration-activity.md)
+
 ## Context
 
 A user requested a custom widget for switching between the volume states for ringtones.
