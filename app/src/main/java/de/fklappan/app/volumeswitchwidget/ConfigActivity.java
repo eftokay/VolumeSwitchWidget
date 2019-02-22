@@ -1,63 +1,62 @@
 package de.fklappan.app.volumeswitchwidget;
 
+import android.app.NotificationManager;
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.media.AudioManager;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 
-import de.fklappan.app.volumeswitchwidget.util.VolumeSwitchWidgetPreferences;
-
-import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import de.fklappan.app.volumeswitchwidget.util.RingVolumeSwitchWidgetPreferences;
 
 /**
- * This activity only is used as an informational activity. It notifies the user about a change to his
- * media volume control. It switches between two states: no sound and last set volume by the user.
- * The last set volume is saved to the android preferences.
+ * This activity is used to notify the user about a additional needed permission. It contains a
+ * little manual how to grant the permission and opens the permission dialog on click
  */
 public class ConfigActivity extends AppCompatActivity {
 
-    @BindView(R.id.button)
-    ImageView imageView;
+    private static final int ON_DO_NOT_DISTURB_CALLBACK_CODE = 101;
+    private static final String LOG_TAG = ConfigActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_status);
+        setContentView(R.layout.activity_config);
         ButterKnife.bind(this);
-        setTitle("");
+        setTitle(R.string.grant_permission);
+    }
+
+    @OnClick(R.id.mainLayout)
+    public void onTapDisplay(View v) {
+        requestMutePermissions();
+    }
+
+    private void requestMutePermissions() {
+        try {
+            NotificationManager notificationManager = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
+            if (notificationManager.isNotificationPolicyAccessGranted()) {
+                RingVolumeSwitchWidgetPreferences.setConfigured(this, true);
+                finish();
+            } else {
+                // Open Setting screen to ask for permisssion
+                Intent intent = new Intent(android.provider.Settings.ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS);
+                startActivityForResult(intent, ON_DO_NOT_DISTURB_CALLBACK_CODE);
+            }
+        } catch (SecurityException e) {
+            Log.e(LOG_TAG, "Exception while requesting permissions from user", e);
+        }
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-
-    }
-
-    private void updateButton() {
-        if (VolumeSwitchWidgetPreferences.isMuted(this)){
-            imageView.setImageResource(R.drawable.volume_off);
-        } else {
-            imageView.setImageResource(R.drawable.volume);
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == ON_DO_NOT_DISTURB_CALLBACK_CODE) {
+            if (resultCode == RESULT_OK) {
+                requestMutePermissions();
+            }
         }
-    }
-
-    @OnClick(R.id.button)
-    public void onClickButton(View v) {
-        AudioManager audioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
-
-        if (VolumeSwitchWidgetPreferences.isMuted(this)){
-            audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 10, AudioManager.FLAG_SHOW_UI);
-        } else {
-            audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 0, AudioManager.FLAG_SHOW_UI);
-
-        }
-
-        updateButton();
     }
 }

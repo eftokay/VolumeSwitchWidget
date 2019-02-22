@@ -17,5 +17,8 @@
         <item name="android:backgroundDimEnabled">false</item>
     </style>
 
+    <style name="VswTextStyle" parent="Base.TextAppearance.AppCompat.Large">
+    </style>
+
 
 </resources>

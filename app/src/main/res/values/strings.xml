@@ -2,4 +2,7 @@
     <string name="app_name">VolumeSwitchWidget</string>
     <string name="sound_muted">Medien Sound AUS</string>
     <string name="sound_value">Medien Sound %1d</string>
+    <string name="permission_explanation">Damit das Widget Deinen Klingelton ändern kann, ist eine weitere Berechtigung notwendig. Folgendes Bild zeigt Dir wie:</string>
+    <string name="permission_tap_to_grant">Tippe auf den Bildschirm und gewähre die Berechtigung .</string>
+    <string name="grant_permission">Berechtigung gewähren</string>
 </resources>
