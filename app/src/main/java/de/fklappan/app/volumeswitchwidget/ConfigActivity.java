@@ -39,8 +39,8 @@ public class ConfigActivity extends AppCompatActivity {
         try {
             NotificationManager notificationManager = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
             if (notificationManager.isNotificationPolicyAccessGranted()) {
-                RingVolumeSwitchWidgetPreferences.setConfigured(this, true);
-                finish();
+                Log.d(LOG_TAG, "access granted");
+                onPermissionGranted();
             } else {
                 // Open Setting screen to ask for permisssion
                 Intent intent = new Intent(android.provider.Settings.ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS);
@@ -54,9 +54,18 @@ public class ConfigActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == ON_DO_NOT_DISTURB_CALLBACK_CODE) {
-            if (resultCode == RESULT_OK) {
-                requestMutePermissions();
+            Log.d(LOG_TAG, "requestCode ok");
+            NotificationManager notificationManager = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
+            if (notificationManager.isNotificationPolicyAccessGranted()) {
+                Log.d(LOG_TAG, "access granted");
+                onPermissionGranted();
             }
         }
+    }
+
+    private void onPermissionGranted() {
+        RingVolumeSwitchWidgetPreferences.setConfigured(this, true);
+        updateWidgets();
+        finish();
     }
 }
