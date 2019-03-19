@@ -2,6 +2,8 @@
 <resources>
     <dimen name="corner_radius">10dp</dimen>
 
+    <dimen name="card_elevation">3dp</dimen>
+    <dimen name="card_corner_radius">8dp</dimen>
     <dimen name="margin">16dp</dimen>
 
 </resources>

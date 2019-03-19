@@ -1,6 +1,8 @@
 package de.fklappan.app.volumeswitchwidget;
 
 import android.app.NotificationManager;
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -49,6 +51,15 @@ public class ConfigActivity extends AppCompatActivity {
         } catch (SecurityException e) {
             Log.e(LOG_TAG, "Exception while requesting permissions from user", e);
         }
+    }
+
+    private void updateWidgets() {
+        Log.d(LOG_TAG, "updateWidgets");
+        Intent intent = new Intent(this, RingVolumeWidgetProvider.class);
+        intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+        int[] ids = AppWidgetManager.getInstance(getApplication()).getAppWidgetIds(new ComponentName(getApplication(), RingVolumeWidgetProvider.class));
+        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
+        sendBroadcast(intent);
     }
 
     @Override
