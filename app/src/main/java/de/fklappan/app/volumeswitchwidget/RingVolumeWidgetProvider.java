@@ -149,6 +149,7 @@ public class RingVolumeWidgetProvider extends AppWidgetProvider {
     }
 
     private void setRingerNormal(AudioManager audioManager) {
+        audioManager.adjustStreamVolume(AudioManager.STREAM_RING, AudioManager.ADJUST_UNMUTE, 0);
         audioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
     }
 
